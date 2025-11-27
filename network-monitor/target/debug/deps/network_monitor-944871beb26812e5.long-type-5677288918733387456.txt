@@ -1,0 +1,2 @@
+fn(actix_web::web::Data<MonitorService>, actix_web::web::Query<PaginationParams>) -> Result<HttpResponse, actix_web::Error> {get_all_monitors}
+fn(actix_web::web::Data<MonitorService>, actix_web::web::Query<PaginationParams>) -> Result<HttpResponse, actix_web::Error> {get_all_monitors}: Handler<_>

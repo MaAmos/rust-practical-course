@@ -1,0 +1,1 @@
+(actix_web::web::Path<i32>, actix_web::web::Data<CheckResultService>, actix_web::web::Query<check_result_handlers::PaginationParams>)

@@ -1,0 +1,1 @@
+SelectStatement<NoFromClause, diesel::query_builder::select_clause::SelectClause<fn() -> monitor_repo::last_insert_rowid_utils::last_insert_rowid {monitor_repo::last_insert_rowid}>>

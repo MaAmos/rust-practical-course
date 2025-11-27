@@ -1,0 +1,2 @@
+fn() -> impl Fn(ServiceResponse) -> Result<api::ErrorHandlerResponse<BoxBody>, actix_web::Error> {simple_error_handler}
+fn() -> impl Fn(ServiceResponse) -> Result<api::ErrorHandlerResponse<BoxBody>, actix_web::Error> {simple_error_handler}: Transform<actix_web::app_service::AppRouting, ServiceRequest>

@@ -1,0 +1,1 @@
+SelectStatement<NoFromClause, diesel::query_builder::select_clause::SelectClause<Result<usize, diesel::result::Error>>>

@@ -1,0 +1,10 @@
+/Users/malijia/Desktop/work/self/rust-project/network-monitor/target/debug/deps/toml_datetime-d6917411ae871267.d: /Users/malijia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_datetime-0.7.3/src/lib.rs /Users/malijia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_datetime-0.7.3/src/datetime.rs /Users/malijia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_datetime-0.7.3/src/de.rs /Users/malijia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_datetime-0.7.3/src/ser.rs
+
+/Users/malijia/Desktop/work/self/rust-project/network-monitor/target/debug/deps/libtoml_datetime-d6917411ae871267.rlib: /Users/malijia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_datetime-0.7.3/src/lib.rs /Users/malijia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_datetime-0.7.3/src/datetime.rs /Users/malijia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_datetime-0.7.3/src/de.rs /Users/malijia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_datetime-0.7.3/src/ser.rs
+
+/Users/malijia/Desktop/work/self/rust-project/network-monitor/target/debug/deps/libtoml_datetime-d6917411ae871267.rmeta: /Users/malijia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_datetime-0.7.3/src/lib.rs /Users/malijia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_datetime-0.7.3/src/datetime.rs /Users/malijia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_datetime-0.7.3/src/de.rs /Users/malijia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_datetime-0.7.3/src/ser.rs
+
+/Users/malijia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_datetime-0.7.3/src/lib.rs:
+/Users/malijia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_datetime-0.7.3/src/datetime.rs:
+/Users/malijia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_datetime-0.7.3/src/de.rs:
+/Users/malijia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_datetime-0.7.3/src/ser.rs:

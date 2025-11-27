@@ -1,0 +1,9 @@
+/Users/malijia/Desktop/work/self/rust-project/network-monitor/target/debug/deps/diesel_migrations-db10e391410b26fb.d: /Users/malijia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/diesel_migrations-2.3.0/src/lib.rs /Users/malijia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/diesel_migrations-2.3.0/src/embedded_migrations.rs /Users/malijia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/diesel_migrations-2.3.0/src/errors.rs /Users/malijia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/diesel_migrations-2.3.0/src/file_based_migrations.rs /Users/malijia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/diesel_migrations-2.3.0/src/migration_harness.rs
+
+/Users/malijia/Desktop/work/self/rust-project/network-monitor/target/debug/deps/libdiesel_migrations-db10e391410b26fb.rmeta: /Users/malijia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/diesel_migrations-2.3.0/src/lib.rs /Users/malijia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/diesel_migrations-2.3.0/src/embedded_migrations.rs /Users/malijia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/diesel_migrations-2.3.0/src/errors.rs /Users/malijia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/diesel_migrations-2.3.0/src/file_based_migrations.rs /Users/malijia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/diesel_migrations-2.3.0/src/migration_harness.rs
+
+/Users/malijia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/diesel_migrations-2.3.0/src/lib.rs:
+/Users/malijia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/diesel_migrations-2.3.0/src/embedded_migrations.rs:
+/Users/malijia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/diesel_migrations-2.3.0/src/errors.rs:
+/Users/malijia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/diesel_migrations-2.3.0/src/file_based_migrations.rs:
+/Users/malijia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/diesel_migrations-2.3.0/src/migration_harness.rs:
