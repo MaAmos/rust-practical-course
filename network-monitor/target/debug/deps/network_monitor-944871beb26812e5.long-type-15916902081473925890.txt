@@ -1,5 +1,0 @@
-fn() -> monitor_repo::last_insert_rowid_utils::last_insert_rowid {monitor_repo::last_insert_rowid}
-diesel::query_builder::select_clause::SelectClause<fn() -> monitor_repo::last_insert_rowid_utils::last_insert_rowid {monitor_repo::last_insert_rowid}>
-SelectStatement<NoFromClause, diesel::query_builder::select_clause::SelectClause<fn() -> monitor_repo::last_insert_rowid_utils::last_insert_rowid {monitor_repo::last_insert_rowid}>>
-fn() -> monitor_repo::last_insert_rowid_utils::last_insert_rowid {monitor_repo::last_insert_rowid}: ValidGrouping<()>
-fn() -> monitor_repo::last_insert_rowid_utils::last_insert_rowid {monitor_repo::last_insert_rowid}: QueryId

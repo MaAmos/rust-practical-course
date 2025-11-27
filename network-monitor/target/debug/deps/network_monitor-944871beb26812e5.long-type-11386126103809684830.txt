@@ -1,1 +1,0 @@
-(actix_web::web::Data<AlertRulesService>, actix_web::web::Query<alert_rule_handlers::PaginationParams>)
