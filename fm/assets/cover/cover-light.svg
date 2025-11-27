@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="bgL" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#F3F6FA"/>
+    </linearGradient>
+    <linearGradient id="accentL" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#CC6E3C"/>
+      <stop offset="100%" stop-color="#E7A67E"/>
+    </linearGradient>
+    <filter id="soft-glowL" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="24" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <style>
+      .title { font: 700 92px/1.2 Inter, "SF Pro Display", Segoe UI, PingFang SC, "Noto Sans CJK SC", Arial, sans-serif; fill: #0B1220; }
+      .subtitle { font: 600 48px/1.4 Inter, "SF Pro Display", Segoe UI, PingFang SC, "Noto Sans CJK SC", Arial, sans-serif; fill: #1F2A3D; opacity: 0.86; }
+      .tag { font: 500 28px/1.6 Inter, "SF Pro Text", Segoe UI, PingFang SC, "Noto Sans CJK SC", Arial, sans-serif; fill: #36465E; opacity: 0.8; }
+      .mono { font: 600 42px/1.4 "JetBrains Mono", Menlo, Consolas, Monaco, monospace; }
+    </style>
+  </defs>
+
+  <rect width="100%" height="100%" fill="url(#bgL)"/>
+
+  <g opacity="0.07">
+    <defs>
+      <pattern id="gridL" width="48" height="48" patternUnits="userSpaceOnUse">
+        <path d="M48 0H0V48" fill="none" stroke="#7A8594" stroke-width="1"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#gridL)"/>
+  </g>
+
+  <circle cx="1640" cy="220" r="180" fill="#E7A67E" opacity="0.28" filter="url(#soft-glowL)"/>
+  <circle cx="260" cy="860" r="160" fill="#4F9EE3" opacity="0.22" filter="url(#soft-glowL)"/>
+
+  <g transform="translate(180,220)">
+    <text class="title">Rust 实践课程</text>
+    <text class="subtitle" y="96">fm 命令行工具 · 文件查询 CLI</text>
+    <text class="tag" y="160">从 0 到 1：参数解析 · 目录遍历 · 正则过滤 · 排序与统计 · 表格/JSON 输出 · 递归与深度控制</text>
+  </g>
+
+  <g transform="translate(180,420)">
+    <rect rx="16" ry="16" width="980" height="420" fill="#FFFFFF" stroke="#E3E8EF" stroke-width="1.2"/>
+    <rect rx="16" ry="16" width="980" height="56" fill="#F6F8FB"/>
+    <circle cx="28" cy="28" r="7" fill="#FF5F57"/>
+    <circle cx="52" cy="28" r="7" fill="#FEBC2E"/>
+    <circle cx="76" cy="28" r="7" fill="#28C840"/>
+    <text x="104" y="36" class="tag" fill="#4A5B71">Terminal</text>
+
+    <g transform="translate(28,96)" class="mono">
+      <text fill="#16A34A">$</text>
+      <text x="28" fill="#0B1220">fm</text>
+      <text x="96" fill="#6B7280"># 列出当前目录（CSV 默认）</text>
+
+      <text y="56" fill="#16A34A">$</text>
+      <text x="28" y="56" fill="#0B1220">fm -a -R -d 2 -s name size -t all</text>
+      <text x="760" y="56" fill="#6B7280"># 隐藏 + 递归 + 排序 + 统计</text>
+
+      <text y="112" fill="#16A34A">$</text>
+      <text x="28" y="112" fill="#0B1220">fm -r "\\.rs$" --output json</text>
+      <text x="560" y="112" fill="#6B7280"># 正则过滤并输出 JSON</text>
+    </g>
+  </g>
+
+  <g transform="translate(1280,280)">
+    <circle r="120" fill="none" stroke="url(#accentL)" stroke-width="10"/>
+    <g opacity="0.9">
+      <rect x="-12" y="-170" width="24" height="50" rx="4" fill="#E7A67E"/>
+      <rect x="-12" y="120" width="24" height="50" rx="4" fill="#E7A67E"/>
+      <rect x="120" y="-12" width="50" height="24" rx="4" fill="#E7A67E"/>
+      <rect x="-170" y="-12" width="50" height="24" rx="4" fill="#E7A67E"/>
+      <rect x="85" y="85" width="40" height="22" rx="4" fill="#E7A67E" transform="rotate(45 105 96)"/>
+      <rect x="-125" y="-107" width="40" height="22" rx="4" fill="#E7A67E" transform="rotate(45 -105 -96)"/>
+      <rect x="-130" y="90" width="40" height="22" rx="4" fill="#E7A67E" transform="rotate(-45 -110 101)"/>
+      <rect x="85" y="-110" width="40" height="22" rx="4" fill="#E7A67E" transform="rotate(-45 105 -99)"/>
+    </g>
+    <g transform="translate(0,320)">
+      <rect x="-220" y="-80" width="440" height="200" rx="14" fill="#FFFFFF" stroke="#E3E8EF"/>
+      <text x="-190" y="-32" class="mono" fill="#2563EB">&gt;_</text>
+      <text x="-130" y="-32" class="mono" fill="#0B1220"> fm main.rs</text>
+      <rect x="-190" y="0" width="360" height="6" rx="3" fill="#E3E8EF"/>
+      <rect x="-190" y="20" width="280" height="6" rx="3" fill="#E3E8EF"/>
+      <rect x="-190" y="40" width="320" height="6" rx="3" fill="#E3E8EF"/>
+    </g>
+  </g>
+
+  <g transform="translate(180,980)">
+    <rect x="0" y="-32" width="1560" height="2" fill="#E5E7EB"/>
+    <text class="tag" fill="#334155">版本 v1.0 · 教程配套代码：fm · 适配 macOS / Linux / Windows</text>
+  </g>
+</svg>
