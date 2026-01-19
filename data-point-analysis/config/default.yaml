@@ -1,0 +1,35 @@
+app:
+  name: "DATA POINT ANALYSIS SYSTEM" #  应用名称
+  version: "1.0.0" #  应用版本
+  description: "Data Point Analysis System" #  应用描述
+  author: "Amos" #  作者名称
+  author_email: "amos_2025@163.com" #  作者邮箱
+
+kafka:
+  brokers: # Kafka 集群地址列表
+    - "localhost:9092"
+  group_id: "data_point_analysis_group_2024-06-15" # 消费者组ID
+  topic: "data-point-analysis" # Kafka topic
+  max_retries: 5 # 重试次数
+  retry_backoff_ms: 1000 # 重试间隔时间（毫秒）
+
+storage:
+  clickhouse: # ClickHouse 配置
+    url: "http://localhost:8123"
+    database: "default"
+    username: "default"
+    password: "cttq.1234"
+    connection_pool_size: 10
+    connection_timeout_secs: 10
+    compression: "lz4"
+  redis: # Redis 配置
+    url: "redis://localhost:6379"
+    password: ""
+  sqlite: # SQLite 配置
+    url: "data/data.db"
+    max_connections: 10
+
+processor: # 流处理器配置
+  session_timeout_secs: 300
+  batch_interval_secs: 60
+  events_max_size: 100

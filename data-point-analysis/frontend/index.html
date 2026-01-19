@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Real-Time Data Point Analytics</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f4f9;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      h1 {
+        text-align: center;
+        color: #444;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+      .card {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+      .card h2 {
+        margin: 0;
+        font-size: 2.5em;
+        color: #007bff;
+      }
+      .card p {
+        margin: 5px 0 0;
+        color: #777;
+        font-size: 1.1em;
+      }
+      .charts {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+        gap: 20px;
+      }
+      .chart-container {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      .list-container {
+        text-align: left;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      li {
+        padding: 5px 0;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+      }
+      li span.count {
+        font-weight: bold;
+        color: #007bff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Real-Time Analytics Dashboard (Last 5 Mins)</h1>
+
+      <div class="grid">
+        <div class="card">
+          <h2 id="active-users">0</h2>
+          <p>Active Users</p>
+        </div>
+        <div class="card">
+          <h2 id="session-count">0</h2>
+          <p>Active Sessions</p>
+        </div>
+        <div class="card">
+          <h2 id="total-events">0</h2>
+          <p>Total Events</p>
+        </div>
+        <div class="card">
+          <h2 id="avg-duration">0s</h2>
+          <p>Avg Session Duration</p>
+        </div>
+        <div class="card">
+          <h2 id="avg-depth">0</h2>
+          <p>Avg Depth (PVs)</p>
+        </div>
+      </div>
+
+      <div class="charts">
+        <div class="chart-container">
+          <h3>Device Distribution</h3>
+          <canvas id="deviceChart"></canvas>
+        </div>
+        <div class="chart-container">
+          <h3>Browser Distribution</h3>
+          <canvas id="browserChart"></canvas>
+        </div>
+        <div class="chart-container">
+          <h3>Top 5 Popular Paths</h3>
+          <canvas id="pathChart"></canvas>
+        </div>
+        <div class="chart-container list-container">
+          <h3>Top Entry Pages</h3>
+          <ul id="entry-pages"></ul>
+        </div>
+        <div class="chart-container list-container">
+          <h3>Top Exit Pages</h3>
+          <ul id="exit-pages"></ul>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const ctxDevice = document.getElementById("deviceChart").getContext("2d");
+      const ctxBrowser = document
+        .getElementById("browserChart")
+        .getContext("2d");
+      const ctxPath = document.getElementById("pathChart").getContext("2d");
+
+      const deviceChart = new Chart(ctxDevice, {
+        type: "doughnut",
+        data: {
+          labels: [],
+          datasets: [
+            {
+              data: [],
+              backgroundColor: [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56",
+                "#4BC0C0",
+                "#9966FF",
+              ],
+            },
+          ],
+        },
+      });
+      const browserChart = new Chart(ctxBrowser, {
+        type: "pie",
+        data: {
+          labels: [],
+          datasets: [
+            {
+              data: [],
+              backgroundColor: [
+                "#36A2EB",
+                "#FF6384",
+                "#FFCE56",
+                "#4BC0C0",
+                "#9966FF",
+              ],
+            },
+          ],
+        },
+      });
+      const pathChart = new Chart(ctxPath, {
+        type: "bar",
+        data: {
+          labels: [],
+          datasets: [
+            { label: "Occurrences", data: [], backgroundColor: "#36A2EB" },
+          ],
+        },
+        options: { indexAxis: "y" },
+      });
+
+      async function updateDashboard() {
+        try {
+          // Ensure the API URL matches your rust server
+          const response = await fetch("http://localhost:3000/metrics");
+          if (!response.ok) return;
+          const data = await response.json();
+
+          // KPI Cards
+          document.getElementById("active-users").innerText = data.active_users;
+          document.getElementById("session-count").innerText =
+            data.session_count;
+          document.getElementById("total-events").innerText = data.total_events;
+          document.getElementById("avg-duration").innerText =
+            (data.avg_session_duration / 1000).toFixed(2) + "s";
+          document.getElementById("avg-depth").innerText =
+            data.avg_session_depth.toFixed(2);
+
+          // Helper to update charts
+          const updateChart = (chart, mapData) => {
+            const sorted = Object.entries(mapData)
+              .sort((a, b) => b[1] - a[1])
+              .slice(0, 10);
+            chart.data.labels = sorted.map((i) => i[0]);
+            chart.data.datasets[0].data = sorted.map((i) => i[1]);
+            chart.update();
+          };
+
+          updateChart(deviceChart, data.device_distribution);
+          updateChart(browserChart, data.browser_distribution);
+          updateChart(pathChart, data.popular_paths);
+
+          // Update lists
+          const updateList = (elementId, mapData) => {
+            const el = document.getElementById(elementId);
+            el.innerHTML = "";
+            Object.entries(mapData)
+              .sort((a, b) => b[1] - a[1])
+              .slice(0, 5)
+              .forEach(([key, val]) => {
+                const li = document.createElement("li");
+                li.innerHTML = `<span>${key}</span> <span class="count">${val}</span>`;
+                el.appendChild(li);
+              });
+          };
+          updateList("entry-pages", data.common_entry_pages);
+          updateList("exit-pages", data.common_exit_pages);
+        } catch (e) {
+          console.error("Error fetching data:", e);
+        }
+      }
+
+      // Poll every 5 seconds
+      setInterval(updateDashboard, 5000);
+      updateDashboard();
+    </script>
+  </body>
+</html>
