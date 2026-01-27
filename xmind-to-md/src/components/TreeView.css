@@ -1,0 +1,315 @@
+/* Mind Map Container */
+.mind-map-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 40px;
+}
+
+/* Node Container: Holds the Node Content + Children Column */
+.node-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+/* The actual "card" for the topic */
+.node-content {
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: rgba(30, 41, 59, 0.8); /* Slate 800 */
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  color: #e2e8f0;
+  white-space: nowrap;
+  position: relative;
+  z-index: 10;
+  transition: all 0.3s ease;
+  min-width: 100px;
+  text-align: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Root Node specific style */
+.node-content.root {
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  color: white;
+  font-weight: bold;
+  font-size: 1.25rem;
+  border: none;
+  box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5);
+}
+
+/* Children Column */
+.children-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 40px; /* Space for the connector lines */
+  position: relative;
+}
+
+/* Connecting lines logic
+   We use ::before on children-container to draw the vertical line
+   And ::before on each child node-container to draw the horizontal line
+*/
+
+/* Vertical Line connecting all children */
+.children-container::before {
+  content: '';
+  position: absolute;
+  left: -20px;
+  top: 50%;
+  bottom: 50%; /* Adjusted dynamically by first/last child logic via JS or simple CSS hacks?
+                 CSS-only approach for simple trees:
+                 Top is top of first child, Bottom is bottom of last child.
+                 Hard to do perfectly without specific height knowledge or extensive markup.
+
+                 Alternative: Draw lines on the children themselves.
+              */
+  width: 2px;
+  background: #475569;
+}
+
+/* Let's try the individual child approach for cleaner CSS-only lines */
+.children-container > .node-container {
+  position: relative;
+  padding: 10px 0; /* Vertical spacing between siblings */
+}
+
+/* Horizontal line from Parent to Children Column */
+/* Actually, we need a line coming out of the right side of the Parent */
+.node-content::after {
+  content: '';
+  position: absolute;
+  right: -40px; /* Reach halfway to children */
+  top: 50%;
+  width: 40px;
+  height: 2px;
+  background: #475569;
+  display: none; /* Only show if has children */
+}
+.node-container.has-children > .node-content::after {
+  display: block;
+}
+
+/* The vertical backbone and horizontal connectors for children */
+/* This is tricky with flexbox. A common way is:
+   Parent -> Line Right -> Vertical Bar -> Horizontal Lines -> Children
+*/
+
+/* Revised CSS Strategy for Mind Map Lines */
+
+.node-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.node-children {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-left: 2rem;
+  border-left: 2px solid #475569;
+}
+
+.node-child {
+  position: relative;
+  padding: 0.5rem 0 0.5rem 1.5rem; /* Indent for the horizontal line */
+}
+
+/* Horizontal line for child */
+.node-child::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 1.5rem;
+  height: 2px;
+  background: #475569;
+}
+
+/* Hide the vertical border for the first and last parts to make it look like a fork */
+/* This is the tricky part. We need to mask the corners or use specific selectors. */
+
+/* Let's use a simpler, robust visual style that works well enough */
+.mindmap-node {
+  display: flex;
+  align-items: center;
+}
+
+.mindmap-children {
+  display: flex;
+  flex-direction: column;
+  margin-left: 40px;
+  position: relative;
+}
+
+/* Vertical line covering all children */
+.mindmap-children::before {
+  content: '';
+  position: absolute;
+  left: -20px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #475569;
+}
+
+/* Fix vertical line height: It should start at the center of the first child and end at the center of the last child */
+/* We can use :first-child and :last-child on the children wrapper to "hide" the excess line */
+.mindmap-child {
+  position: relative;
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+}
+
+.mindmap-child::before {
+  content: '';
+  position: absolute;
+  left: -20px;
+  top: 50%;
+  width: 20px;
+  height: 2px;
+  background: #475569;
+}
+
+/* Masking the top and bottom of the vertical line */
+.mindmap-children > .mindmap-child:first-child::after {
+  content: '';
+  position: absolute;
+  left: -24px; /* Cover the line */
+  top: -50%;
+  height: 100%;
+  width: 6px;
+  background: var(--bg-primary, #0f172a); /* Match background */
+}
+/* Wait, this masking is fragile if background changes.
+   Better approach: Don't draw one big line. Draw half-lines on each child.
+*/
+
+/* FINAL APPROACH: Individual connectors */
+.mm-node {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.mm-children {
+    display: flex;
+    flex-direction: column;
+    margin-left: 50px; /* Gap for lines */
+    position: relative;
+}
+
+.mm-child {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+}
+
+/* Vertical Line Segment (Up/Down) */
+.mm-child::before {
+    content: '';
+    position: absolute;
+    left: -25px;
+    top: 50%;
+    bottom: 50%; /* Default 0 height */
+    width: 2px;
+    background: #64748b;
+}
+
+/* Expand vertical line to top for non-first children */
+.mm-child:not(:first-child)::before {
+    top: -50%; /* Connect to sibling above */
+}
+/* Expand vertical line to bottom for non-last children */
+.mm-child:not(:last-child)::before {
+    bottom: -50%; /* Connect to sibling below */
+}
+/* If it's a middle child, it needs both. Using top: -50% and bottom: -50% creates a full vertical line. */
+
+/* BUT: The vertical line must stop at the center of the node for the first and last child.
+   :first-child => top: 50%, bottom: -50% (goes down)
+   :last-child => top: -50%, bottom: 50% (goes up)
+   :middle => top: -50%, bottom: -50%
+*/
+
+.mm-children > .mm-child:first-child::before {
+    top: 50%;
+    bottom: 0; /* Go down to next sibling, but stop at own center? No, needs to connect down. */
+    height: auto; /* removing bottom: 50% restriction if defined */
+}
+
+/* This is complex to get perfect with pure CSS.
+Let's use a simpler logical approach:
+A left border on the children container (except for first/last tweaks)
+plus horizontal lines on children.
+*/
+
+.css-tree-node {
+    display: flex;
+    align-items: center;
+}
+
+.css-tree-children {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 2rem;
+    position: relative;
+}
+
+.css-tree-child {
+    position: relative;
+    padding: 0.5rem 0;
+}
+
+/* Horizontal Connector */
+.css-tree-child::before {
+    content: '';
+    position: absolute;
+    left: -2rem;
+    top: 50%;
+    width: 2rem;
+    height: 2px;
+    background-color: #475569;
+}
+
+/* Vertical Connector: The Border Strategy */
+.css-tree-children::before {
+    content: '';
+    position: absolute;
+    left: -2rem;
+    top: 50%;
+    bottom: 50%;
+    width: 2px;
+    background-color: #475569;
+    /* We need to expand this via JS or complicated calc?
+       No, let's just make the vertical line spanning top child center to bottom child center.
+    */
+    top: 0; /* Placeholder */
+    bottom: 0;
+}
+
+/* Let's go with the cleanest "Card Board" look, even if lines aren't 100% perfect curves. */
+.feature-card {
+    background: rgba(30, 41, 59, 1);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    padding: 8px 16px;
+    border-radius: 6px;
+    color: #f1f5f9;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.feature-card.root {
+    font-size: 1.2rem;
+    font-weight: bold;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    border: none;
+    padding: 12px 24px;
+}
