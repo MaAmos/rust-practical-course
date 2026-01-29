@@ -82,10 +82,26 @@ export const extractNodes = async (content, zip) => {
             }
         }
 
-        // Process Children (attached)
-        if (topic.children && topic.children.attached) {
-            // Use Promise.all to handle async image extraction in children
-            node.children = await Promise.all(topic.children.attached.map(traverse));
+        // Process Children (attached, summary, detached)
+        const childrenAttached = (topic.children && topic.children.attached) || [];
+        const childrenSummary = (topic.children && topic.children.summary) || [];
+        const childrenDetached = (topic.children && topic.children.detached) || [];
+
+        // Combine all children, marking summaries
+        const allChildren = [
+            ...childrenAttached.map(t => ({ ...t, _type: 'attached' })),
+            ...childrenSummary.map(t => ({ ...t, _type: 'summary', isSummary: true })),
+            ...childrenDetached.map(t => ({ ...t, _type: 'detached' }))
+        ];
+
+        if (allChildren.length > 0) {
+            node.children = await Promise.all(allChildren.map(async (childTopic) => {
+                const childNode = await traverse(childTopic);
+                if (childTopic.isSummary) {
+                    childNode.isSummary = true;
+                }
+                return childNode;
+            }));
         }
 
         return node;

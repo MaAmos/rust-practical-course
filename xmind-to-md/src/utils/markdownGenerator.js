@@ -13,14 +13,15 @@ export const convertToMarkdown = (rootNode, embedImages = false) => {
 
         // Title handling
         let titleLine = "";
+        const title = node.isSummary ? `[Summary] ${node.title}` : node.title;
         if (depth === 0) {
-            titleLine = `# ${node.title}\n`;
+            titleLine = `# ${title}\n`;
         } else if (depth === 1) {
-            titleLine = `## ${node.title}\n`;
+            titleLine = `## ${title}\n`;
         } else if (depth === 2) {
-             titleLine = `### ${node.title}\n`;
+             titleLine = `### ${title}\n`;
         } else {
-            titleLine = `${indent}- ${node.title}\n`;
+            titleLine = `${indent}- ${title}\n`;
         }
         md += titleLine;
 

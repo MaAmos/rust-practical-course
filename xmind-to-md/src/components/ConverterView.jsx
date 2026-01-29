@@ -65,19 +65,9 @@ export const ConverterView = ({ fileName, topicTree, mdContent }) => {
       padding: treeRef.current.style.padding,
       backgroundColor: treeRef.current.style.backgroundColor,
       borderRadius: treeRef.current.style.borderRadius,
-      transform: treeRef.current.style.transform,
-      transformOrigin: treeRef.current.style.transformOrigin
     };
 
     try {
-      // Apply export styles with scale transformation for higher quality
-      const scale = 2; // Scale up 2x for better text rendering
-      treeRef.current.style.padding = '40px';
-      treeRef.current.style.backgroundColor = '#0f172a';
-      treeRef.current.style.borderRadius = '12px';
-      treeRef.current.style.transform = `scale(${scale})`;
-      treeRef.current.style.transformOrigin = 'top left';
-
       // Increase image size limits for higher quality export (but keep them controlled)
       const images = treeRef.current.getElementsByTagName('img');
       const imageOriginalStyles = [];
@@ -87,19 +77,33 @@ export const ConverterView = ({ fileName, topicTree, mdContent }) => {
           maxWidth: img.style.maxWidth,
           maxHeight: img.style.maxHeight
         });
-        // Set larger limits instead of removing them entirely
-        img.style.maxWidth = '400px';
-        img.style.maxHeight = '400px';
+        img.style.maxWidth = '600px';
+        img.style.maxHeight = '600px';
       }
 
-      // Wait for styles to apply
-      await new Promise(resolve => setTimeout(resolve, 300));
+      // Apply temporary export styles
+      treeRef.current.style.padding = '60px';
+      treeRef.current.style.backgroundColor = '#0f172a';
+      treeRef.current.style.borderRadius = '0px'; // No rounded corners for the full export image
+
+      // Wait for styles/images to settle
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      // Calculate full dimensions to ensure nothing is clipped
+      const width = treeRef.current.scrollWidth;
+      const height = treeRef.current.scrollHeight;
 
       const dataUrl = await toPng(treeRef.current, {
         cacheBust: true,
         backgroundColor: '#0f172a',
-        pixelRatio: 2, // Combined with scale for very high resolution
-        skipFonts: false
+        pixelRatio: 3, // Use 3x for very crisp text without CSS scale
+        skipFonts: false,
+        width: width,
+        height: height,
+        style: {
+          transform: 'none',
+          transformOrigin: 'top left'
+        }
       });
 
       // Restore image styles
@@ -112,8 +116,6 @@ export const ConverterView = ({ fileName, topicTree, mdContent }) => {
       if (!dataUrl || dataUrl.length < 100) {
           throw new Error("Generated image data is empty or too small.");
       }
-
-      console.log('Data URL length:', dataUrl.length);
 
       const link = document.createElement('a');
       link.download = fileName ? fileName.replace('.xmind', '.png') : 'mindmap.png';
@@ -129,8 +131,6 @@ export const ConverterView = ({ fileName, topicTree, mdContent }) => {
       treeRef.current.style.padding = originalStyles.padding;
       treeRef.current.style.backgroundColor = originalStyles.backgroundColor;
       treeRef.current.style.borderRadius = originalStyles.borderRadius;
-      treeRef.current.style.transform = originalStyles.transform;
-      treeRef.current.style.transformOrigin = originalStyles.transformOrigin;
       setExportingImg(false);
     }
   }, [fileName]);
@@ -155,13 +155,19 @@ export const ConverterView = ({ fileName, topicTree, mdContent }) => {
              <img src={node.imageUrl} alt={node.title} className="max-w-[200px] max-h-[200px] rounded-sm object-contain" />
            )}
 
-           <span>{node.title}</span>
+            {node.isSummary && (
+              <span className="text-[10px] bg-orange-500/80 text-white px-1.5 py-0.5 rounded-full font-bold uppercase tracking-tighter">
+                Summary
+              </span>
+            )}
 
-           {node.note && (
-             <div className="text-[10px] bg-slate-700/50 p-1 rounded w-full text-left text-gray-300 italic whitespace-pre-wrap max-w-[200px]">
-               {node.note}
-             </div>
-           )}
+            <span>{node.title}</span>
+
+            {node.note && (
+              <div className="text-[10px] bg-slate-700/50 p-1 rounded w-full text-left text-gray-300 italic whitespace-pre-wrap max-w-[200px]">
+                {node.note}
+              </div>
+            )}
 
            {/* Connector to children (Right side) */}
            {hasChildren && (
